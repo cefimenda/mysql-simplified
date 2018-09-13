@@ -66,8 +66,11 @@ Prints out information from our table in a readable format.
 #### Arguments:
 
 **columns:** OPTIONAL. Defaults to '*' (All). Array of Strings. 
+
 Insert the columns you want to print information from. Insert multiple column names as strings in an array.
+
 **limit:** OPTIONAL. Defaults to '100'. Number.
+
 Set a limit to how many rows of data you want to receive.
 
 #### Code Example:
@@ -93,17 +96,28 @@ Returns a list of objects each representing a single row of the table, where key
 
 #### Arguments:
 
-**conditionColumn:** REQUIRED. String
+**conditionColumn:** REQUIRED. String.
+
 The name of the column that will be used to filter out results.
-**conditionValue:** REQUIRED. String or Number
+
+**conditionValue:** REQUIRED. String or Number.
+
 The value for the column that will be filtered for.
+
 **comparison:** OPTIONAL. Defaults to '='. Takes "=",">" or "<".
+
 How to compare the table value and the desired value.
+
 **orderBy:** OPTIONAL. String.
+
 The name of the column you want your results to be ordered by.
-**ascendingBoolean:** OPTIONAL. Only used if orderBy is also defined. Defaults to 'true'. Boolean.
+
+**ascendingBoolean:** OPTIONAL. Boolean. Only used if orderBy is also defined. Defaults to 'true'.
+
 Defines whether the dataset is ordered in an ascending or descending manner. Values of true,undefined,null result in an ascending ordering.
+
 **limit:** OPTIONAL. Number.
+
 Sets a limit to how many results will be returned. If undefined, the method will return all results that match the criteria.
 
 #### Code Example:
@@ -130,12 +144,19 @@ Updates the table and returns a success message.
 #### Arguments:
 
 **updateColumn:** REQUIRED. String.
+
 The name of the column that will be updated.
+
 **newValue:** REQUIRED. String or Number.
+
 The new value for the column that will be updated.
+
 **conditionColumn:** REQUIRED. String.
+
 The name of the column that will be used to select exactly what column will be updated.
-**conditionValue:** REQUIRED. String or Number
+
+**conditionValue:** REQUIRED. String or Number.
+
 The value that will be looked for to select which row should be updated.
 
 #### Code Example:
@@ -164,6 +185,7 @@ Appends a new item to the existing table.
 #### Arguments:
 
 **itemObject:** REQUIRED. Object.
+
 An object that represents the row of data that will be added to the table. Each key in the object must exactly match a column name on the table, any key that doesn't match a column name will be ignored, and each column that doesn't have a matching key will receive a value of null.
 
 *Keys that correspond to AUTO_INCREMENTed columns will be ignored.*
@@ -200,6 +222,7 @@ Appends a list of items to the existing table.
 #### Arguments:
 
 **itemList:** REQUIRED. List of Objects.
+
 A list of objects where each object represents the row of data that will be added to the table. Each key in each object must exactly match a column name on the table, any key that doesn't match a column name will be ignored, and each column that doesn't have a matching key will receive a value of null.
 
 *Keys that correspond to AUTO_INCREMENTed columns will be ignored.*
@@ -242,11 +265,16 @@ Deletes specified Item/Items based on criteria entered.
 
 #### Arguments:
 
-**conditionColumn:** REQUIRED. String
+**conditionColumn:** REQUIRED. String.
+
 The name of the column that will be used to find what will be deleted.
-**conditionValue:** REQUIRED. String or Number
+
+**conditionValue:** REQUIRED. String or Number.
+
 The desired value for the column to find what will be deleted.
+
 **comparison:** OPTIONAL. Defaults to '='. Takes "=",">" or "<".
+
 How to compare the table value and the desired value.
 
 #### Code Example:
@@ -300,12 +328,19 @@ Returns the last entry/entries that fits set conditions.
 #### Arguments:
 
 **orderBy:** REQUIRED. String.
+
 The name of the AUTO_INCREMENTed column that will be used to determine the order with which items were added.
+
 **limit:** OPTIONAL. Number. Defaults to 1.
+
 Sets a limit for how many results will be returned. Will return a single result if limit is undefined.
-**conditionColumn:** OPTIONAL. String
+
+**conditionColumn:** OPTIONAL. String.
+
 The name of the column that will be compared to conditionValue in order to filter results.
-**conditionValue:** OPTIONAL. String or Number
+
+**conditionValue:** OPTIONAL. String or Number.
+
 The desired value for the column to filter what will be returned.
 
 #### Code Example:
