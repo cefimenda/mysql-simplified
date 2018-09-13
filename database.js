@@ -20,15 +20,16 @@ function Table(name, config) {
                 resolve(columns)
             })
         })
-    }
+    };
     this.connect = function () {
         this.connection = mysql.createConnection(this.config)
     };
-    this.print = function (input) {
+    this.print = function (columns, limit) {
         return new Promise((resolve, reject) => {
             var query = "SELECT ?? FROM ?? LIMIT ?";
-            var filter = input || "*"
-            this.connection.query(query, [filter, this.name, 100], function (err, res) {
+            var filter = columns || "*"
+            var amount = limit || 100
+            this.connection.query(query, [filter, this.name, amount], function (err, res) {
                 if (err) {
                     console.log(err)
                     reject(err)
@@ -72,19 +73,19 @@ function Table(name, config) {
             });
         })
     };
-    this.changeTable = function (changeColumn, newValue, conditionColumn, conditionValue) {
+    this.updateTable = function (updateColumn, newValue, conditionColumn, conditionValue) {
         return new Promise((resolve, reject) => {
             var query = "UPDATE ?? SET ?? = ? WHERE ?? = ?;"
-            this.connection.query(query, [this.name, changeColumn, newValue, conditionColumn, conditionValue], function (err, res) {
+            this.connection.query(query, [this.name, updateColumn, newValue, conditionColumn, conditionValue], function (err, res) {
                 if (err) {
                     console.log(err)
                     reject(err)
                 }
-                resolve("You have successfully updated the table " + this.name + " for " + propToChange + " to have a value of " + newValueforProp + " where " + columnToTarget + " is equal to " + targetCriteria + ".")
+                resolve("You have successfully updated the table " + this.name + " for " + updateColumn + " to have a value of " + newValue + " where " + conditionColumn + " is equal to " + conditionValue + ".")
             });
         })
     };
-    this.newItem = function (itemObject) {
+    this.append = function (itemObject) {
         return new Promise((resolve, reject) => {
             this.getColumns().then((columnList) => {
                 var query = "INSERT INTO ?? (??) values (?);";
@@ -110,12 +111,12 @@ function Table(name, config) {
             }
             this.getColumns().then((columnList) => {
                 var query = "INSERT INTO ?? (??) values ?; ";
-                var escaper = [this.name,columnList,[]];
+                var escaper = [this.name, columnList, []];
                 console.log(itemList)
-                for (var i = 0; i<itemList.length; i++) {
+                for (var i = 0; i < itemList.length; i++) {
                     var item = itemList[i]
                     var itemValues = []
-                    for (var n in columnList){
+                    for (var n in columnList) {
                         itemValues.push(item[columnList[n]])
                     }
                     escaper[2].push(itemValues)
@@ -132,13 +133,13 @@ function Table(name, config) {
             })
         })
     };
-    this.deleteItem = function (conditionColumn, conditionValue, condition) {
+    this.deleteItem = function (conditionColumn, conditionValue, comparison) {
         return new Promise((resolve, reject) => {
-            if (!condition || condition === "=") {
+            if (!comparison || comparison === "=") {
                 var query = "DELETE FROM ?? WHERE ?? = ?";
-            } else if (condition === ">") {
+            } else if (comparison === ">") {
                 var query = "DELETE FROM ?? WHERE ?? > ?";
-            } else if (condition === "<") {
+            } else if (comparison === "<") {
                 var query = "DELETE FROM ?? WHERE ?? < ?";
             }
             this.connection.query(query, [this.name, conditionColumn, conditionValue], function (err, res) {
@@ -146,11 +147,11 @@ function Table(name, config) {
                     console.log(err)
                     reject(err)
                 }
-                resolve("You have successfully deleted item(s) with a " + column + " of " + target + ".")
+                resolve("You have successfully deleted item(s) with " + conditionColumn + comparison + conditionValue + ".")
             })
         })
     }
-    this.getMostRecent = function (limit, conditionColumn, conditionValue) {
+    this.getMostRecent = function (orderBy, limit, conditionColumn, conditionValue) {
         return new Promise((resolve, reject) => {
             var query = "SELECT * FROM ??"
             var escaper = [this.name]
@@ -158,11 +159,12 @@ function Table(name, config) {
                 query += "WHERE ?? = ?"
                 escaper.push(conditionColumn, conditionValue)
             }
-            query += "ORDER BY id DESC"
-            if (limit) {
-                query += " LIMIT ?"
-                escaper.push(limit)
-            }
+            query += "ORDER BY ?? DESC"
+            escaper.push(orderBy)
+            var amount = limit || 1
+            query += " LIMIT ?"
+            escaper.push(amount)
+
             query += ";"
             this.connection.query(query, escaper, function (err, res) {
                 if (err) {

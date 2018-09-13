@@ -1,0 +1,19 @@
+{
+  "name": "mysql-simplified",
+  "version": "1.0.0",
+  "description": "mysql-simplified",
+  "main": "database.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cefimenda/mysql-simplified.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cefimenda/mysql-simplified/issues"
+  },
+  "homepage": "https://github.com/cefimenda/mysql-simplified#readme"
+}
