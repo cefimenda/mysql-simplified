@@ -1,4 +1,4 @@
-#mysql-simplified
+# mysql-simplified
 
 **mysql-simplified** is a wrapper for the mysql node package that enables interacting with mysql databases only using javascript.
 
@@ -6,7 +6,7 @@ This simple module returns a constructor with each method in the constructor mak
 
 All queries are escaped, so are safe against mysql insertion.
 
-###Setup
+### Setup
 
 You must first make sure to run `npm install mysql-simplified` in your project file to install mysql-simplified.
 
@@ -39,7 +39,7 @@ var myTable.connect();
 ```
 Make sure to end connection by running `myTable.connection.end()` when you are done interacting with the database, otherwise your connection will remain open and the node process will not end.
 
-###Usage
+### Usage
 
 After defining our table variable and connecting to it with the connect method, we are ready to call any other method on this object. All methods return a promise, so using any method is as simple as the following:
 
@@ -51,23 +51,23 @@ myTable.someMethod(parameters).then(function(result){
 
 ```
 
-###Methods
+### Methods
 
-####.connect()
+#### .connect()
 
 Connects to the table with the defined configurations
 
-####.print(columns,limit)
+#### .print(columns,limit)
 
 Prints out information from our table in a readable format. 
 
-#####Arguments:
+##### Arguments:
 **columns:** OPTIONAL. Defaults to '*' (All). Array of Strings. 
 Insert the columns you want to print information from. Insert multiple column names as strings in an array.
 **limit:** OPTIONAL. Defaults to '100'. Number.
 Set a limit to how many rows of data you want to receive.
 
-#####Code Example:
+##### Code Example:
 ```javascript
 
 myTable.print().then(function(){
@@ -82,11 +82,11 @@ Expected result: data gets printed onto the terminal window.
 
 `SELECT {columns} FROM myTable LIMIT {limit}`
 
-####.getItem(conditionColumn,conditionValue,comparison,orderBy,ascendingBoolean,limit)
+#### .getItem(conditionColumn,conditionValue,comparison,orderBy,ascendingBoolean,limit)
 
 Returns a list of objects each representing a single row of the table, where keys are column names and values are the data stored in that particular row.
 
-#####Arguments:
+##### Arguments:
 **conditionColumn:** REQUIRED. String
 The name of the column that will be used to filter out results.
 **conditionValue:** REQUIRED. String or Number
@@ -100,7 +100,7 @@ Defines whether the dataset is ordered in an ascending or descending manner. Val
 **limit:** OPTIONAL. Number.
 Sets a limit to how many results will be returned. If undefined, the method will return all results that match the criteria.
 
-#####Code Example:
+##### Code Example:
 
 ```javascript
 
@@ -115,11 +115,11 @@ Expected result: Prints an array of a maximum of 10 objects that have an id larg
 
 `SELECT * FROM myTable WHERE {conditionColumn} {comparison} {conditionValue} ORDER BY {orderBy} {ascendingBoolean --> ASC||DESC} LIMIT {limit}`
 
-####.updateTable(updateColumn,newValue,conditionColumn,conditionValue)
+#### .updateTable(updateColumn,newValue,conditionColumn,conditionValue)
 
 Updates the table and returns a success message.
 
-#####Arguments:
+##### Arguments:
 **updateColumn:** REQUIRED. String.
 The name of the column that will be updated.
 **newValue:** REQUIRED. String or Number.
@@ -129,7 +129,7 @@ The name of the column that will be used to select exactly what column will be u
 **conditionValue:** REQUIRED. String or Number
 The value that will be looked for to select which row should be updated.
 
-#####Code Example:
+##### Code Example:
 
 ```javascript
 
@@ -146,17 +146,17 @@ Prints out "You have successfully updated the table myTable for {updateColumn} t
 
 `UPDATE myTable SET {updateColumn} = {newValue} WHERE {conditionColumn} = {conditionValue}`
 
-####.append(itemObject)
+#### .append(itemObject)
 
 Appends a new item to the existing table.
 
-#####Arguments:
+##### Arguments:
 **itemObject:** REQUIRED. Object.
 An object that represents the row of data that will be added to the table. Each key in the object must exactly match a column name on the table, any key that doesn't match a column name will be ignored, and each column that doesn't have a matching key will receive a value of null.
 
 *Keys that correspond to AUTO_INCREMENTed columns will be ignored.*
 
-#####Code Example:
+##### Code Example:
 
 Assuming that we have a database table with columns id(AUTO INCREMENT), name and movieScore:
 
@@ -179,17 +179,17 @@ Prints out "Item successfully added"
 
 `INSERT INTO myTable {myTable.getColumns()} values ({newItemObject})`
 
-####.newGroup(itemList)
+#### .newGroup(itemList)
 
 Appends a list of items to the existing table.
 
-#####Arguments:
+##### Arguments:
 **itemList:** REQUIRED. List of Objects.
 A list of objects where each object represents the row of data that will be added to the table. Each key in each object must exactly match a column name on the table, any key that doesn't match a column name will be ignored, and each column that doesn't have a matching key will receive a value of null.
 
 *Keys that correspond to AUTO_INCREMENTed columns will be ignored.*
 
-#####Code Example:
+##### Code Example:
 
 Assuming that we have a database table with columns id(AUTO INCREMENT), name and movieScore:
 
@@ -220,18 +220,18 @@ Prints out "2 items successfully added"
 `INSERT INTO myTable {myTable.getColumns()} values ({newItemList})`
 
 
-####.deleteItem(conditionColumn,conditionValue,comparison)
+#### .deleteItem(conditionColumn,conditionValue,comparison)
 
 Deletes specified Item/Items based on criteria entered.
 
-#####Arguments:
+##### Arguments:
 **conditionColumn:** REQUIRED. String
 The name of the column that will be used to find what will be deleted.
 **conditionValue:** REQUIRED. String or Number
 The desired value for the column to find what will be deleted.
 **comparison:** OPTIONAL. Defaults to '='. Takes "=",">" or "<".
 How to compare the table value and the desired value.
-#####Code Example:
+##### Code Example:
 
 ```javascript
 
@@ -248,11 +248,11 @@ Prints out "You have successfully deleted item(s) with item_id>39."
 
 `DELETE FROM myTable WHERE {conditionColumn} {comparison} {conditionValue})`
 
-####.getColumns()
+#### .getColumns()
 
 Returns names of Columns in the table as a list.
 
-#####Code Example:
+##### Code Example:
 
 ```javascript
 
@@ -269,13 +269,13 @@ This method will NOT return any columns that auto_increment.
 
 `SHOW COLUMNS FROM myTable`
 
-####.getMostRecent(orderBy, limit,conditionColumn,conditionValue)
+#### .getMostRecent(orderBy, limit,conditionColumn,conditionValue)
 
 **CURRENTLY ASSUMES THAT THERE IS AN {orderBy} COLUMN THAT IS AUTO_INCREMENTED.**
 
 Returns the last entry/entries that fits set conditions.
 
-#####Arguments:
+##### Arguments:
 **orderBy:** REQUIRED. String.
 The name of the AUTO_INCREMENTed column that will be used to determine the order with which items were added.
 **limit:** OPTIONAL. Number. Defaults to 1.
@@ -285,7 +285,7 @@ The name of the column that will be compared to conditionValue in order to filte
 **conditionValue:** OPTIONAL. String or Number
 The desired value for the column to filter what will be returned.
 
-#####Code Example:
+##### Code Example:
 
 ```javascript
 
