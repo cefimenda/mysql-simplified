@@ -57,6 +57,8 @@ myTable.someMethod(parameters).then(function(result){
 
 Connects to the table with the defined configurations
 
+---
+
 ### .print(columns,limit)
 
 Prints out information from our table in a readable format. 
@@ -82,6 +84,8 @@ Expected result: data gets printed onto the terminal window.
 #### MYSQL Query Equivalent:
 
 `SELECT {columns} FROM myTable LIMIT {limit}`
+
+---
 
 ### .getItem(conditionColumn,conditionValue,comparison,orderBy,ascendingBoolean,limit)
 
@@ -117,6 +121,8 @@ Expected result: Prints an array of a maximum of 10 objects that have an id larg
 
 `SELECT * FROM myTable WHERE {conditionColumn} {comparison} {conditionValue} ORDER BY {orderBy} {ascendingBoolean --> ASC||DESC} LIMIT {limit}`
 
+---
+
 ### .updateTable(updateColumn,newValue,conditionColumn,conditionValue)
 
 Updates the table and returns a success message.
@@ -148,6 +154,8 @@ Prints out "You have successfully updated the table myTable for {updateColumn} t
 #### MYSQL Query Equivalent:
 
 `UPDATE myTable SET {updateColumn} = {newValue} WHERE {conditionColumn} = {conditionValue}`
+
+---
 
 ### .append(itemObject)
 
@@ -182,6 +190,8 @@ Prints out "Item successfully added"
 #### MYSQL Query Equivalent:
 
 `INSERT INTO myTable {myTable.getColumns()} values ({newItemObject})`
+
+---
 
 ### .newGroup(itemList)
 
@@ -224,6 +234,7 @@ Prints out "2 items successfully added"
 
 `INSERT INTO myTable {myTable.getColumns()} values ({newItemList})`
 
+---
 
 ### .deleteItem(conditionColumn,conditionValue,comparison)
 
@@ -255,6 +266,8 @@ Prints out "You have successfully deleted item(s) with item_id>39."
 
 `DELETE FROM myTable WHERE {conditionColumn} {comparison} {conditionValue})`
 
+---
+
 ### .getColumns()
 
 Returns names of Columns in the table as a list.
@@ -275,6 +288,8 @@ This method will NOT return any columns that auto_increment.
 #### MYSQL Query Equivalent:
 
 `SHOW COLUMNS FROM myTable`
+
+---
 
 ### .getMostRecent(orderBy, limit,conditionColumn,conditionValue)
 
