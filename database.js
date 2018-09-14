@@ -98,7 +98,7 @@ function Table(name, config) {
                         console.log(err)
                         reject(err)
                     }
-                    resolve("Item successfully added")
+                    resolve(res)
                 })
             })
         })

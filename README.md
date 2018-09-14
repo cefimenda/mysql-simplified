@@ -207,7 +207,7 @@ myTable.append(newItemObject).then(function(result){
 ```
 Expected result: Inserts a new row with a name column of "The Matrix" and a movieScore column of 10. 
 
-Prints out "Item successfully added"
+Prints out a success object.
 
 #### MYSQL Query Equivalent:
 
