@@ -175,6 +175,33 @@ function Table(name, config) {
             })
         })
     }
+    this.join = function (selectArray,joinType, joinTable, onColumn1, onColumn2) {
+        return new Promise((resolve, reject) => {
+            if (joinType === "LEFT") {
+                var query = "SELECT ?? FROM ?? LEFT JOIN ?? ON ?? = ??;"
+            } else if (joinType === "RIGHT") {
+                var query = "SELECT ?? FROM ?? RIGHT JOIN ?? ON ?? = ??;"
+            } else if (joinType === "INNER") {
+                var query = "SELECT ?? FROM ?? INNER JOIN ?? ON ?? = ??;"
+            } else if (joinType === "OUTER") {
+                var query = "SELECT ?? FROM ?? OUTER JOIN ?? ON ?? = ??;"
+            } else if (!joinType) {
+                reject("No Join Type Specified")
+                return
+            } else {
+                reject("Unknown Join Type")
+                return
+            }
+            var escaper = [selectArray, this.name, joinTable, onColumn, onValue]
+            this.connection.query(query, escaper, function (err, res) {
+                if (err) {
+                    console.log(err)
+                    reject(err)
+                }
+                resolve(res)
+            });
+        })
+    }
 }
 
 module.exports = Table

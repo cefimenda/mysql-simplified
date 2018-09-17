@@ -296,6 +296,53 @@ Prints out "You have successfully deleted item(s) with item_id>39."
 
 ---
 
+### .join(selectArray,joinType,joinTable,onColumn1,onColumn2)
+
+Joins two tables and returns the data for specified columns in JSON format.
+
+#### Arguments:
+
+**selectArray:** REQUIRED. Array of Strings.
+
+The names of the columns that will be selected from the joint table to be returned. All columns must be written out as tableName.columnName.
+
+**joinType:** REQUIRED. String. Choices are LEFT, RIGHT, INNER, OUTER.
+
+Defines how the two tables will be joined.
+
+**joinTable:** REQUIRED. String.
+
+The name of the table that will be joined with the original table defined in the object.
+
+**onColumn1:** REQUIRED. String.
+
+The name of the column in table 1 that is the equivalent of what is provided for the onColumn2 argument, which will be used for merging the two tables.
+
+**onColumn2:** REQUIRED. String.
+
+The name of the column in table 2 that is the equivalent of what is provided for the onColumn1 argument, which will be used for merging the two tables.
+
+#### Code Example:
+
+```javascript
+
+var selectArray = ["purchases.request_id","purchases.seller_id","sellers.ratings","sellers.phone"]
+seekingAssistance.join(selectArray,"LEFT",'sellers',"purchases.seller_id","sellers.id").then(function(result){
+    console.log(result);
+});
+
+```
+Expected result: Returns a JSON object displaying values for request_id, and seller_id on the purchases table and 
+ratings and phone on the sellers table. The tables have been joined on the columns purchases.seller_id and sellers.id. 
+
+As this is a LEFT join, any items that appear in sellers but not purchases will not be displayed in the return of the function. See MYSQL documentation for more information on JOINs.
+
+#### MYSQL Query Equivalent:
+
+`SELECT {selectArray} FROM myTable {joinType} JOIN {joinTable} ON {onColumn1} = {onColumn2}`
+
+---
+
 ### .getColumns()
 
 Returns names of Columns in the table as a list.
