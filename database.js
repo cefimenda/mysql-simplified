@@ -112,7 +112,6 @@ function Table(name, config) {
             this.getColumns().then((columnList) => {
                 var query = "INSERT INTO ?? (??) values ?; ";
                 var escaper = [this.name, columnList, []];
-                console.log(itemList)
                 for (var i = 0; i < itemList.length; i++) {
                     var item = itemList[i]
                     var itemValues = []
@@ -121,8 +120,6 @@ function Table(name, config) {
                     }
                     escaper[2].push(itemValues)
                 }
-                console.log(query)
-                console.log(escaper)
                 this.connection.query(query, escaper, function (err, res) {
                     if (err) {
                         console.log(err)
